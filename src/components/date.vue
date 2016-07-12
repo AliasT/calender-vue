@@ -76,9 +76,16 @@
     },
 
     computed: {
+      /**
+       * 月份对应的天数
+       */
       days () {
         return util.getDays(this.current.year)[this.current.month]
       },
+
+      /**
+       * 每个月的第一天是星期几
+       */
       start () {
         var date = new Date()
         date.setFullYear(this.current.year)
