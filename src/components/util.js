@@ -9,10 +9,14 @@ export default {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
   },
 
-  initDate () {
+  /**
+   * 初始化
+   * @param{object} opts 用户提供的初始化信息
+   */
+  initDate (opts) {
     const dateNow = new Date()
     const year = dateNow.getFullYear()
-    const month = dateNow.getMonth() + 1
+    const month = dateNow.getMonth()  // from 0 to 11
 
     return {
       year: year,
@@ -22,7 +26,8 @@ export default {
       mintues: dateNow.getMinutes(),
       seconds: dateNow.getSeconds(),
       days: this.getDays(year)[month],
-      weekdays: this.weekdays
+      weekdays: this.weekdays,
+      showedMonth: month + 1
     }
   }
 }
