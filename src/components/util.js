@@ -9,6 +9,10 @@ export default {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
   },
 
+  getStart (date) {
+    date.setDate(1)
+    return date.getDay()
+  },
   /**
    * 初始化
    * @param{object} opts 用户提供的初始化信息
@@ -27,7 +31,7 @@ export default {
       seconds: dateNow.getSeconds(),
       days: this.getDays(year)[month],
       weekdays: this.weekdays,
-      showedMonth: month + 1
+      weekday: dateNow.getDay()
     }
   }
 }

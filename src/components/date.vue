@@ -6,7 +6,7 @@
     <div class="main">
       <div class="top clearfix">
         <!-- 年份选择 -->
-        <div class="left ">
+        <div class="left">
           <span @click="updateYear(-1)">&lt;&lt;</span>
           <input class="" type="text" v-model="current.year">
           <span @click="updateYear(1)">&gt;&gt;</span>
@@ -14,7 +14,7 @@
         <!-- 月份选择 -->
         <div class="right">
           <span @click="updateMonth(-1)">&lt;</span>
-          <input class="" type="text" v-model="current.showedMonth">
+          <input class="" type="text" v-model="month">
           <span @click="updateMonth(1)">&gt;</span>
         </div>
       </div>
@@ -22,7 +22,8 @@
         <span class="cell" v-for="(index, weekday) in current.weekdays" track-by="$index">{{weekday}}</span>
       </div>
       <!-- 日期选择 -->
-      <div class="middle">
+      <div class="middle clearfix">
+        <span class="cell" v-bind:style="{ width: start * 30 + 'px' }"></span>
         <span class="cell" v-for="i in days" track-by="$index">{{i+1}}</span>
       </div>
 
@@ -60,21 +61,30 @@
           hours: 0,
           mintues: 0,
           seconds: 0,
-          days: 0,
-          showedMonth: 0
+          days: 0
         },
-        days: 0
+        days: 0,
+        month: 0,
+        start: 0
       }
     },
 
     created () {
       this.current = util.initDate(this.opts)
       this.days = this.current.days
+      this.month = this.current.month + 1
     },
 
     computed: {
       days () {
         return util.getDays(this.current.year)[this.current.month]
+      },
+      start () {
+        var date = new Date()
+        date.setFullYear(this.current.year)
+        date.setMonth(this.current.month)
+        date.setDate(1)
+        return date.getDay()
       }
     },
 
@@ -94,7 +104,7 @@
       updateMonth (op) {
         this.current.month += op
         this.current.month = this.current.month % 12
-        this.current.showedMonth = this.current.month + 1
+        this.month = this.current.month + 1
       },
       /**
        * 显示
@@ -175,15 +185,17 @@
     padding: 10px 12px;
   }
   .cell {
+    vertical-align: middle;
     text-align: center;
     width: 30px;
     height: 30px;
     box-sizing: border-box;
-    display: inline-block;
+    float: left;
     line-height: 30px;
   }
 
   .middle {
+    height: 210px;
     .cell:hover {
       background: #eee;
     }
