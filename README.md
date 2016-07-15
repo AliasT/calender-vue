@@ -1,3 +1,4 @@
+![](p.gif)
 # vue-sinatra-project
 
 > A Vue.js project
